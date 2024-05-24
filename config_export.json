@@ -1,0 +1,34 @@
+[
+    {
+        "C:\\Users\\richardazevedo\\OneDrive - CIVIL MASTER PROJETOS E CONST SA\\sharing\\funcionarios.xlsx": [
+            {
+                "sheet_name": "funcionarios",
+                "sql" : "funcionarios_lista.sql"
+            },
+            {
+                "sheet_name": "movimento",
+                "sql" : "funcionarios_movimento.sql"
+            },
+            {
+                "sheet_name": "gympass",
+                "sql" : "funcionarios_gympass.sql"
+            }
+        ]
+    },
+    {
+        "C:\\Users\\richardazevedo\\OneDrive - CIVIL MASTER PROJETOS E CONST SA\\sharing\\qsms_hh.xlsx": [
+            {
+                "sheet_name": "hh",
+                "sql" : "qsms_hh_mes.sql"
+            }
+        ]
+    },
+    {
+        "C:\\Users\\richardazevedo\\OneDrive - CIVIL MASTER PROJETOS E CONST SA\\sharing\\servint_teste.xlsx": [
+            {
+                "sheet_name": "sheet1",
+                "sql": "servint_teste.sql"
+            }
+        ]
+    }
+]
