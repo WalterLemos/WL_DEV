@@ -4,11 +4,15 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from time import sleep
 import openpyxl
+import os
 
 numero_oab = 88922
 
-# entrar no site da - https://pje-consulta-publica.tjmg.jus.br/
-driver = webdriver.Chrome(r'C:\ProjetorPython\dev\chromedriver-win64\chromedriver.exe')
+## Configurando o caminho do executável como variável de ambiente
+chrome_driver_path = r'C:\ProjetorPython\dev\chromedriver-win64\chromedriver.exe'
+os.environ["webdriver.chrome.driver"] = chrome_driver_path
+# Inicializando o driver do Chrome
+driver = webdriver.Chrome()
 driver.get('https://pje-consulta-publica.tjmg.jus.br/')
 sleep(20)
 # digitar número oab 

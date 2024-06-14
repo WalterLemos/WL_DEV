@@ -42,3 +42,11 @@ exe = EXE(
     codesign_identity=None,
     entitlements_file=None,
 )
+
+ solver = recaptchaV2Proxyless()
+    #solver = recaptchaV2Proxyon()
+    solver.set_verbose(1)
+    solver.set_key(chave_api)
+    solver.set_website_url(link)
+    solver.set_website_key(chave_captcha)
+    resposta = solver.solve_and_return_solution()

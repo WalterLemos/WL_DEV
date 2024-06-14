@@ -2,10 +2,15 @@ from PrettyColorPrinter import add_printer
 from pdferli import get_pdfdf
 import numpy as np
 import pandas as pd
+import os
 
-path = r"C:\ProjetorPython\files\PR_69699742001710_1000_BU9AL80U_Data-_1_9_2020_Hora-_23_4_16.pdf"
-add_printer(1)
-df = get_pdfdf(path, normalize_content=False)
+path = 'C:\\ProjetorPython\\files\\PR_69699742001710_1000_BU9AL80U_Data-_1_9_2020_Hora-_23_4_16.pdf'
+if not os.path.exists(path):
+    print(f"Error: File not found at {path}")
+else:
+    print(f"File found at {path}")
+    add_printer(1)
+    df = get_pdfdf(path, normalize_content=False)
 print(df)
 togi = []
 for r in np.split(df, df.loc[df.aa_element_type == "LTAnno"].index):

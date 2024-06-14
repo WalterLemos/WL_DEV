@@ -4,6 +4,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import pyautogui
 from time import sleep
 import openpyxl
@@ -11,52 +13,77 @@ import openpyxl
 def new_func():
     pyautogui.press('backspace',presses=20)
 
+def printlongo():
+  pyautogui.keyDown('ctrl')
+  pyautogui.press('p')
+  pyautogui.keyUp('ctrl')
+  sleep(1)
+  #clicar em destino
+  pyautogui.click(1461,229)
+  sleep(0.5)
+  #clicar em guardar como PDF
+  pyautogui.click(1376,271)
+  sleep(0.5)
+  #clicar em guardar
+  pyautogui.click(1434,908)
+  sleep(0.5)
+  #apagar nome
+  new_func()
+  #Escreve a CDA
+  pyautogui.write('excluir')
+  #clicar em salvar
+  pyautogui.click(696,741)
+  sleep(0.5)
+  #clicar em sim (caso tenha algo para substituir)
+  pyautogui.click(1020,527)
+
+def printcurto():
+  pyautogui.keyDown('ctrl')
+  pyautogui.press('p')
+  pyautogui.keyUp('ctrl')
+  sleep(1)
+  #clicar em guardar
+  pyautogui.click(1434,908)
+  sleep(0.5)
+  #apagar nome
+  new_func()
+  #Escreve a CDA
+  pyautogui.write(CDA)
+  #clicar em salvar
+  pyautogui.click(696,741)
+  sleep(0.5)
+  #clicar em sim (caso tenha algo para substituir)
+  pyautogui.click(1020,527)
+
 ## Configurando o caminho do executável como variável de ambiente
-chrome_driver_path = r'C:\ProjetorPython\dev\chromedriver-win64\chromedriver.exe'
+chrome_driver_path = r'C:\Users\suporte\Desktop\PSTs j&f C:\Users\suporte\Desktop\PSTs j&f jbs\chromedriver-win64\chromedriver.exe'
 os.environ["webdriver.chrome.driver"] = chrome_driver_path
 
 # Inicializando o driver do Chrome
 driver = webdriver.Chrome()
 driver.get('https://www.dividaativa.pge.sp.gov.br/sc/pages/consultas/consultarDebito.jsf')
 
+primeiro_registro2 = True  # Variável para controlar o primeiro registro
 
-pyautogui.click(1472,44)
-sleep(2)
-pyautogui.click(1870,187)
-sleep(1)
-pyautogui.keyDown('ctrl')
-pyautogui.press('p')
-pyautogui.keyUp('ctrl')
-sleep(1)
-#clicar em destino
-pyautogui.click(1507,172)
-sleep(0.5)
-#clicar em guardar como PDF
-pyautogui.click(1486,206)
-sleep(0.5)
-#clicar em guardar
-pyautogui.click(1469,900)
-sleep(0.5)
-#apagar nome
-new_func()
-#Escreve a CDA
-pyautogui.write('excluir')
-#clicar em salvar
-pyautogui.click(795,506)
-sleep(0.5)
-#clicar em sim (caso tenha algo para substituir)
-pyautogui.click(1020,537)
+pyautogui.click(1235,43) #Clicar para expandir o chrome
+sleep(5)
+pyautogui.click(1883,153) #Clicar para fechar a notificação de barra de tarefas
+
+if primeiro_registro2:
+   printlongo()
+   primeiro_registro2 = False  # Defina como False após o primeiro registro 
+   sleep(1)
 
 # Nome do arquivo Excel e nome da planilha
-nome_arquivo_excel = r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\Análise EFs - 1502994-19.2020.8.26.0068.xlsx'
-nome_planilha_excel = 'Débitos IPVA SP - Pan Arre'
+nome_arquivo_excel = r'C:\Users\suporte\Desktop\Rõbo MDU\bichara-robos\Demanda 0159.xlsx'
+nome_planilha_excel = 'Débitos IPVA'
 
 # Carregar a planilha Excel
 workbook = openpyxl.load_workbook(nome_arquivo_excel)
 planilha = workbook[nome_planilha_excel]
 
 # Começando da linha 4, coluna 3 (C)
-start_row = 4
+start_row = 660
 column_index = 3
 
 # Descobrir o número total de linhas na planilha
@@ -98,27 +125,7 @@ while row <= total_rows:
 
     if "Nenhum resultado com os critérios de consulta" in resultado_msg:
         CDA = str(Num_CDA)
-        #Gerar PDF da Tela
-        pyautogui.click(1472,44)
-        sleep(2)
-        pyautogui.click(1870,187)
-        sleep(1)
-        pyautogui.keyDown('ctrl')
-        pyautogui.press('p')
-        pyautogui.keyUp('ctrl')
-        sleep(1)
-        #clicar em guardar
-        pyautogui.click(1469,900)
-        sleep(0.5)
-        #apagar nome
-        new_func()
-        #Escreve a CDA
-        pyautogui.write(CDA)
-        #clicar em salvar
-        pyautogui.click(795,506)
-        sleep(0.5)
-        #clicar em sim (caso tenha algo para substituir)
-        pyautogui.click(1020,537)
+        printcurto()
         row += 1  # Vá para a próxima linha e continue o loop
         continue
     # Consultar IPVA
@@ -133,34 +140,33 @@ while row <= total_rows:
     
    # Verifique se o elemento valor_honorarios_element exis
     try:
-        valor_honorarios_element = driver.find_element(By.XPATH, "//tbody[@id='consultaDebitoForm:j_id1128:tb']//td[@id='consultaDebitoForm:j_id1128:4:j_id1136']")
-        valor_honorarios = valor_honorarios_element.text
+      valor_honorarios_element = driver.find_element(By.XPATH, "//tbody[@id='consultaDebitoForm:j_id1128:tb']//td[@id='consultaDebitoForm:j_id1128:4:j_id1136']")
+      valor_honorarios = valor_honorarios_element.text
+    except NoSuchElementException:
+       valor_honorarios = 0
+    try:
+      valor_mora_multa_element = driver.find_element(By.XPATH,"//tbody[@id='consultaDebitoForm:j_id1128:tb']//td[@id='consultaDebitoForm:j_id1128:5:j_id1136']")
+      valor_mora_multa = valor_mora_multa_element.text
+    except NoSuchElementException:
+      valor_mora_multa = 0
 
-        valor_mora_multa_element = driver.find_element(By.XPATH,"//tbody[@id='consultaDebitoForm:j_id1128:tb']//td[@id='consultaDebitoForm:j_id1128:5:j_id1136']")
-        valor_mora_multa = valor_mora_multa_element.text
-
-    except NoSuchElementException:  
-        valor_mora_multa_element = driver.find_element(By.XPATH,"//tbody[@id='consultaDebitoForm:j_id1128:tb']//td[@id='consultaDebitoForm:j_id1128:5:j_id1136']")
-        valor_mora_multa = valor_mora_multa_element.text
-        valor_honorarios = 0
-
-    # Extrair informações
-    num_registro_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id1012']")
+       # Extrair informações
+    num_registro_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id1022']")
     num_registro = num_registro_element.find_element(By.TAG_NAME, "span").text
     
-    numero_processo_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id1028']")
+    numero_processo_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id1038']")
     numero_processo = numero_processo_element.find_element(By.TAG_NAME, "span").text
     
-    numero_processo_outros_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id1037']")
+    numero_processo_outros_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id1047']")
     numero_processo_outros = numero_processo_outros_element.find_element(By.TAG_NAME, "span").text
 
-    data_inscricao_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id1020']")
+    data_inscricao_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id1030']")
     data_inscricao = data_inscricao_element.find_element(By.TAG_NAME, "span").text
 
-    situacao_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id1094']")
+    situacao_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id1104']")
     situacao = situacao_element.find_element(By.TAG_NAME, "span").text
     
-    saldo_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id1110']")
+    saldo_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id1120']")
     saldo= saldo_element.find_element(By.TAG_NAME, "span").text
     
     valor_principal_element = driver.find_element(By.XPATH,"//tbody[@id='consultaDebitoForm:j_id1128:tb']//td[@id='consultaDebitoForm:j_id1128:0:j_id1136']")
@@ -172,26 +178,27 @@ while row <= total_rows:
     valor_multa_element = driver.find_element(By.XPATH,"//tbody[@id='consultaDebitoForm:j_id1128:tb']//td[@id='consultaDebitoForm:j_id1128:3:j_id1136']")
     valor_multa = valor_multa_element.text
         
-    placa_element = driver.find_element(By.XPATH,"//tbody[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:tb']//td[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1177']")
+    placa_element = driver.find_element(By.XPATH,"//tbody[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:tb']//td[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1187']")
     placa = placa_element.text
     
-    renavam_element = driver.find_element(By.XPATH,"//tbody[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:tb']//td[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1179']")
+    renavam_element = driver.find_element(By.XPATH,"//tbody[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:tb']//td[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1189']")
     renavam = renavam_element.text
     
-    chassi_element = driver.find_element(By.XPATH,"//tbody[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:tb']//td[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1181']")
+    chassi_element = driver.find_element(By.XPATH,"//tbody[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:tb']//td[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1191']")
     chassi = chassi_element.text
    
-    marca_modelo_element = driver.find_element(By.XPATH,"//tbody[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:tb']//td[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1183']")
+    marca_modelo_element = driver.find_element(By.XPATH,"//tbody[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:tb']//td[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1193']")
     marca_modelo = marca_modelo_element.text
     
-    ano_fab_element = driver.find_element(By.XPATH,"//tbody[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:tb']//td[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1185']")
+    ano_fab_element = driver.find_element(By.XPATH,"//tbody[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:tb']//td[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1195']")
     ano_fab = ano_fab_element.text
    
-    ano_exercicio_element = driver.find_element(By.XPATH,"//tbody[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:tb']//td[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1187']")
+    ano_exercicio_element = driver.find_element(By.XPATH,"//tbody[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:tb']//td[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1197']")
     ano_exercicio = ano_exercicio_element.text
     
-    dt_parcelas_element = driver.find_element(By.XPATH,"//tbody[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:tb']//td[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1189']")
+    dt_parcelas_element = driver.find_element(By.XPATH,"//tbody[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:tb']//td[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1199']")
     dt_parcelas = dt_parcelas_element.text
+  
     
     # Encontre a próxima coluna disponível (vamos começar da coluna D)
     coluna_atual = column_index + 1
@@ -251,35 +258,19 @@ while row <= total_rows:
     # Salve o arquivo Excel
     workbook.save(nome_arquivo_excel)
     CDA = str(Num_CDA)
-     #Gerar PDF da Tela.
-    pyautogui.click(1472,44)
-    sleep(2)
-    pyautogui.click(1870,187)
-    sleep(1)
-    pyautogui.keyDown('ctrl')
-    pyautogui.press('p')
-    pyautogui.keyUp('ctrl')
-    sleep(1)
-    #clicar em guardar
-    pyautogui.click(1469,900)
-    sleep(0.5)
-    #apagar nome
-    new_func()
-    #Escreve a CDA
-    pyautogui.write(CDA)
-    #clicar em salvar
-    pyautogui.click(795,506)
-    sleep(0.5)
-    #clicar em sim (caso tenha algo para substituir)
-    pyautogui.click(1020,537)
+    printcurto()
 
-     # Botão Voltar
-    btn_Voltar = driver.find_element(By.XPATH, "//input[@name='consultaDebitoForm:btnVoltarDetalheDebito']")
+    # Botão Voltar
+    wait = WebDriverWait(driver, 15)
+    btn_Voltar = wait.until(EC.presence_of_element_located((By.XPATH, "//input[@id='consultaDebitoForm:btnVoltarDetalheDebito']")))
+    #driver.find_element(By.XPATH, "//input[@name='consultaDebitoForm:btnVoltarDetalheDebito']")
     btn_Voltar.click()
     sleep(2)
 
      # Botão Voltar
-    btn_Voltar1 = driver.find_element(By.XPATH, "//input[@name='consultaDebitoForm:j_id264']")
+    wait = WebDriverWait(driver, 15)
+    btn_Voltar1 = wait.until(EC.presence_of_element_located((By.XPATH, "//input[@name='consultaDebitoForm:j_id278']")))
+      #driver.find_element(By.XPATH, "//input[@name='consultaDebitoForm:j_id264']")
     btn_Voltar1.click()
     sleep(2)
     row += 1

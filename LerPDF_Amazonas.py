@@ -52,7 +52,7 @@ def extrair_data_emissao(texto):
     return None
 
 def main():
-    pasta_notas = r'C:\ProjetorPython\files\OneDrive_1_29-04-2024\NF_OCR2'
+    pasta_notas = r'C:\Users\walter.oliveira\Documents\NF_OCR'
     dados = []  # Lista para armazenar os dados extraídos
 
     # Conta quantos arquivos PDF existem na pasta
