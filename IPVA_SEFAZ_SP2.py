@@ -31,7 +31,7 @@ def salvar_como_pdf(renavam):
      # apagar nome
      new_func()
      # Escreve a Renavam
-     pyautogui.write(f'relatorio_{renavam}_{Num_Exercicio}.pdf')
+     pyautogui.write(f'relatorio_{renavam}_{Num_Exercicio}_{Cota}.pdf')
      # clicar em salvar
      pyautogui.click(716, 670)
      sleep(1)
@@ -227,18 +227,17 @@ while row <= total_rows:
                    workbook.save(nome_arquivo_excel)
                    # Manipular a tela de impressão para salvar em PDF
                    renavam = str(Num_Renavam)
-
-                   # Botão Imprimir
                    salvar_como_pdf(renavam)
 
                    btn_retornar = driver.find_element(By.XPATH, '/html/body/div/div[3]/div[2]/button')
                    btn_retornar.click()
-                   sleep(5)
-                else:     
-                  parcela_unica_element = driver.find_element(By.XPATH,'/html/body/div/div[8]/table/tbody/tr[5]/td[1]')
-                  parcela_unica = parcela_unica_element.text  
-        # Verificar se o texto do elemento é 'Parcela Unica'
-                  if parcela_unica == 'Parcela Única':
+                   sleep(2)
+                   continue    
+                # Verificar se o texto do elemento é 'Parcela Unica'
+                parcela_unica_element = driver.find_element(By.XPATH,'/html/body/div/div[8]/table/tbody/tr[5]/td[1]')
+                parcela_unica = parcela_unica_element.text  
+        
+                if parcela_unica == 'Parcela Única':
                     # Nome do arquivo Excel e nome da planilha
                       nome_arquivo_excel = r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\Templete_Pagamentos_SP.xlsx'
                       nome_planilha_excel = 'Parcela única'
@@ -317,11 +316,11 @@ while row <= total_rows:
 
                       btn_Voltar_parcela = driver.find_element(By.XPATH, '/html/body/div/div[3]/div[2]/button')
                       btn_Voltar_parcela.click()
-                    
-        # Botão Retornar Pagina Inicial
-                btn_retornar_inicial = driver.find_element(By.XPATH, '/html/body/div/div[10]/div/button')
-                btn_retornar_inicial.click()
-                sleep(2)
+                # Botão Retornar Pagina Inicial
+                      btn_retornar_inicial = driver.find_element(By.XPATH, '/html/body/div/div[10]/div/button')
+                      btn_retornar_inicial.click()
+                      sleep(2)
+                      row += 1
         else:
            print("Falha ao resolver o CAPTCHA.")
         row += 1

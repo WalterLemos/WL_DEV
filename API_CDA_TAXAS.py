@@ -260,7 +260,7 @@ while row <= total_rows:
     btn_Voltar.click()
     sleep(2)
 
-     # Botão Voltar
+    # Botão Voltar
     btn_Voltar1 = driver.find_element(By.XPATH, "//input[@name='consultaDebitoForm:j_id278']")
     btn_Voltar1.click()
     sleep(2)
