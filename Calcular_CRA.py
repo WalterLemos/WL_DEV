@@ -5,8 +5,8 @@ def calcular_cra(notas, creditos):
     return cra
 
 # Exemplo de notas e créditos das disciplinas
-notas = [6.5, 8.25, 9.5, 6, 8, 8.75, 7]
-creditos = [4, 4, 4, 4, 4, 4, 4]
+notas = [6.5, 6.25, 7.5, 8, 8, 7]
+creditos = [4, 4, 4, 4, 4, 4]
 
 # Chamar a função para calcular o CRA
 cra = calcular_cra(notas, creditos)

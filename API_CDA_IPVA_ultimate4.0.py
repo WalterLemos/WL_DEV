@@ -40,12 +40,12 @@ driver.get(link)
 primeiro_registro2 = True  # Variável para controlar o primeiro registro
 
 pyautogui.click(1480, 39)
-sleep(1)
+sleep(2)
 pyautogui.click(1868, 184)
-sleep(1)
+sleep(2)
 
 # Nome do arquivo Excel e nome da planilha
-nome_arquivo_excel = r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\Planilhamento - EEF 1000682-95.2020.8.26.0014.xlsx'
+nome_arquivo_excel = r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\Planilhamento - 1509827-50.2022.8.26.0014.xlsx'
 nome_planilha_excel = 'Débitos IPVA SP - Pan Arre'
 
 # Carregar a planilha Excel
