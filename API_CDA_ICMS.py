@@ -1,24 +1,38 @@
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
+import re
+from selenium.common.exceptions import NoSuchElementException
+from twocaptcha import TwoCaptcha
+from anticaptchaofficial.recaptchav2proxyless import *
 import pyautogui
 from time import sleep
 import openpyxl
+from Chave import *
+
 
 def new_func():
     pyautogui.press('backspace',presses=20)
+# Inicializando o driver do Chrome
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+link = 'https://www.dividaativa.pge.sp.gov.br/sc/pages/consultas/consultarDebito.jsf'
+driver.get(link)
 
-# entrar no site da -https://www.dividaativa.pge.sp.gov.br/sc/pages/consultas/consultarDebito.jsf
-chrome_driver_path = r'C:\ProjetorPython\dev\chromedriver-win64\chromedriver.exe'
-driver = webdriver.Chrome(executable_path=chrome_driver_path)
-driver.get('https://www.dividaativa.pge.sp.gov.br/sc/pages/consultas/consultarDebito.jsf')
+primeiro_registro2 = True  # Variável para controlar o primeiro registro
 
-pyautogui.click(982,25)
+pyautogui.click(1480, 39)
+sleep(2)
+pyautogui.click(1868, 184)
+sleep(2)
+
 
 # Nome do arquivo Excel e nome da planilha
-nome_arquivo_excel = r'C:\ProjetorPython\files\Levantamento Robo_Banco Pan 11.2023.xlsx'
-nome_planilha_excel = 'Débitos ICMS Declarado'
+nome_arquivo_excel = r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\Template_Ipva e Taxa_Judiciaria1.xlsx'
+nome_planilha_excel = 'Débitos IPVA'
 
 # Carregar a planilha Excel
 workbook = openpyxl.load_workbook(nome_arquivo_excel)

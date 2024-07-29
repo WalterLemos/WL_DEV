@@ -28,7 +28,7 @@ def salvar_como_pdf(CDA, num_processo):
     pyautogui.click(1493, 918)
     sleep(1)
     new_func()
-    pyautogui.write(f'relatorio_{CDA}_{num_processo}.pdf')
+    pyautogui.write(f'CDA_{CDA}_{num_processo}.pdf')
     pyautogui.click(716, 670)
     sleep(1)
     pyautogui.click(1033, 527)
@@ -46,7 +46,7 @@ def renomear_arquivo_downloads(cda, num_processo):
         return
     
     # Novo nome do arquivo
-    novo_nome = f'relatorio_{cda}_{num_processo}.pdf'
+    novo_nome = f'CDA_{cda}_{num_processo}.pdf'
     novo_caminho = os.path.join(pasta_downloads, novo_nome)
     
     # Renomear o arquivo

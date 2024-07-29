@@ -45,8 +45,8 @@ pyautogui.click(1868, 184)
 sleep(2)
 
 # Nome do arquivo Excel e nome da planilha
-nome_arquivo_excel = r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\Planilhamento - 1509827-50.2022.8.26.0014.xlsx'
-nome_planilha_excel = 'Débitos IPVA SP - Pan Arre'
+nome_arquivo_excel = r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\Template_Ipva e Taxa_Judiciaria - VDG - 24.07.xlsx'
+nome_planilha_excel = 'Débitos IPVA'
 
 # Carregar a planilha Excel
 workbook = openpyxl.load_workbook(nome_arquivo_excel)
@@ -89,7 +89,7 @@ while row <= total_rows:
         resposta = solver.solve_and_return_solution()
 
         if resposta != 0:
-            print(resposta)
+            #print(resposta)
             # preencher o campo do token do captcha
             driver.execute_script(f"document.getElementById('g-recaptcha-response').innerHTML = '{resposta}'")
             driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id78_body']/div[2]/input[2]").click()
@@ -107,14 +107,14 @@ while row <= total_rows:
     resultado_msg_element = driver.find_elements(By.XPATH, "//div[@class='rich-panel-body ']//p")
     resultado_msg = resultado_msg_element[0].text if resultado_msg_element else ""
 
-   # Escreva a mensagem no Excel
+    # Escreva a mensagem no Excel
     planilha.cell(row=row, column=column_index + 1, value=resultado_msg)
 
     if "Nenhum resultado com os critérios de consulta" in resultado_msg:
-        CDA = str(Num_CDA)
-        salvar_como_pdf(CDA)
-        row += 1  # Vá para a próxima linha e continue o loop
-        continue
+     CDA = str(Num_CDA)
+     salvar_como_pdf(CDA)
+     row += 1  # Vá para a próxima linha e continue o loop
+     continue
     # Consultar IPVA
     href_IPVA = driver.find_element(By.XPATH, "//a[@id='consultaDebitoForm:dataTable:0:lnkConsultaDebito']")
     href_IPVA.click()
