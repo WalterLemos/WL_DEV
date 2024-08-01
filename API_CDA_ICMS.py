@@ -17,8 +17,10 @@ from Chave import *
 
 def new_func():
     pyautogui.press('backspace',presses=20)
+
 # Inicializando o driver do Chrome
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+driver_service = Service(r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\chromedriver-win64\chromedriver.exe')
+driver = webdriver.Chrome(service=driver_service)
 link = 'https://www.dividaativa.pge.sp.gov.br/sc/pages/consultas/consultarDebito.jsf'
 driver.get(link)
 

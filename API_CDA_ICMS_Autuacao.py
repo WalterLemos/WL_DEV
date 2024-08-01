@@ -54,7 +54,7 @@ workbook = openpyxl.load_workbook(nome_arquivo_excel)
 planilha = workbook[nome_planilha_excel]
 
 # Começando da linha 4, coluna 3 (C)
-start_row = 4
+start_row = 6
 column_index = 3
 
 # Descobrir o número total de linhas na planilha
@@ -124,69 +124,41 @@ while row <= total_rows:
     # Consultar Registro
     href_Registro = driver.find_element(By.XPATH, "//a[@href='#']")
     href_Registro.click()
-    sleep(1) 
-    
-   # Verifique se o elemento valor_honorarios_element exis
-    try:
-      valor_honorarios_element = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id1130:4:j_id1138']")
-      valor_honorarios = valor_honorarios_element.text
-    except NoSuchElementException:
-       valor_honorarios = 0
-    try:
-      valor_mora_multa_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:j_id1130:5:j_id1138']")
-      valor_mora_multa = valor_mora_multa_element.text
-    except NoSuchElementException:
-      valor_mora_multa = 0
+    sleep(1)
 
-       # Extrair informações
-    num_registro_element = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id1024']")
+    # Extrair informações
+    num_registro_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id1024']")
     num_registro = num_registro_element.find_element(By.TAG_NAME, "span").text
     
-    numero_processo_element = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id1040']")
+    numero_processo_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id1040']")
     numero_processo = numero_processo_element.find_element(By.TAG_NAME, "span").text
     
-    numero_processo_outros_element = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id1049']")
+    numero_processo_outros_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id1049']")
     numero_processo_outros = numero_processo_outros_element.find_element(By.TAG_NAME, "span").text
 
-    data_inscricao_element = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id1032']")
+    data_inscricao_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id1032']")
     data_inscricao = data_inscricao_element.find_element(By.TAG_NAME, "span").text
 
-    situacao_element = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id1106']")
+    situacao_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id1106']")
     situacao = situacao_element.find_element(By.TAG_NAME, "span").text
     
-    saldo_element = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id1122']")
+    saldo_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id1122']")
     saldo= saldo_element.find_element(By.TAG_NAME, "span").text
     
-    valor_principal_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:j_id1130:0:j_id1138']")
+    valor_principal_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:j_id1130:0:j_id1138'] ")
     valor_principal = valor_principal_element.text
 
-    valor_juros_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:j_id1130:2:j_id1138']")
+    valor_juros_element = driver.find_element(By.XPATH," //*[@id='consultaDebitoForm:j_id1130:2:j_id1138']")
     valor_juros = valor_juros_element.text
 
-    valor_multa_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:j_id1130:3:j_id1138']")
+    valor_multa_punitiva_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:j_id1130:3:j_id1138']")
+    valor_multa_punitiva = valor_multa_punitiva_element.text
+
+    valor_multa_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:j_id1130:5:j_id1138']")
     valor_multa = valor_multa_element.text
-        
-    placa_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1189']")
-    placa = placa_element.text
-    
-    renavam_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1191']")
-    renavam = renavam_element.text
-    
-    chassi_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1193']")
-    chassi = chassi_element.text
-   
-    marca_modelo_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1195']")
-    marca_modelo = marca_modelo_element.text
-    
-    ano_fab_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1197']")
-    ano_fab = ano_fab_element.text
-   
-    ano_exercicio_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1199']")
-    ano_exercicio = ano_exercicio_element.text
-    
-    dt_parcelas_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:detalheDebitoIpvaDeclarado:0:j_id1201']")
-    dt_parcelas = dt_parcelas_element.text
-  
+
+    valor_honorarios_element = driver.find_element(By.XPATH," //*[@id='consultaDebitoForm:j_id1130:6:j_id1138']")
+    valor_honorarios= valor_honorarios_element.text
     
     # Encontre a próxima coluna disponível (vamos começar da coluna D)
     coluna_atual = column_index + 1
@@ -214,35 +186,15 @@ while row <= total_rows:
     planilha.cell(row=row, column=coluna_atual, value=valor_juros)
     coluna_atual += 1
 
+    planilha.cell(row=row, column=coluna_atual, value=valor_multa_punitiva)
+    coluna_atual += 1
+
     planilha.cell(row=row, column=coluna_atual, value=valor_multa)
     coluna_atual += 1
 
     planilha.cell(row=row, column=coluna_atual, value=valor_honorarios)
     coluna_atual += 1
 
-    planilha.cell(row=row, column=coluna_atual, value=valor_mora_multa)
-    coluna_atual += 1
-
-    planilha.cell(row=row, column=coluna_atual, value=placa)
-    coluna_atual += 1
-
-    planilha.cell(row=row, column=coluna_atual, value=renavam)
-    coluna_atual += 1
-
-    planilha.cell(row=row, column=coluna_atual, value=chassi)
-    coluna_atual += 1
-
-    planilha.cell(row=row, column=coluna_atual, value=marca_modelo)
-    coluna_atual += 1
-
-    planilha.cell(row=row, column=coluna_atual, value=ano_fab)
-    coluna_atual += 1
-
-    planilha.cell(row=row, column=coluna_atual, value=ano_exercicio)
-    coluna_atual += 1
-
-    planilha.cell(row=row, column=coluna_atual, value=dt_parcelas)
-    
     # Salve o arquivo Excel
     workbook.save(nome_arquivo_excel)
     CDA = str(Num_CDA)
@@ -265,4 +217,5 @@ while row <= total_rows:
 
 # Fechar o WebDriver
 driver.quit()
+
 

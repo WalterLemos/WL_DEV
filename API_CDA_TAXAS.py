@@ -1,45 +1,51 @@
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.select import Select
-from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.select import Select
+import re
+from selenium.common.exceptions import NoSuchElementException
+from twocaptcha import TwoCaptcha
+from anticaptchaofficial.recaptchav2proxyless import *
 import pyautogui
 from time import sleep
 import openpyxl
-
+from Chave import *
 def new_func():
-    pyautogui.press('backspace',presses=20)
+    pyautogui.press('backspace', presses=20)
 
-def GerarPDF(CDA):
-        pyautogui.keyDown('ctrl')
-        pyautogui.press('p')
-        pyautogui.keyUp('ctrl')
-        sleep(1)
-        #clicar em guardar
-        pyautogui.click(1034,667)
-        sleep(0.5)
-        #apagar nome
-        new_func()
-        #Escreve a CDA
-        pyautogui.write(CDA)
-       #clicar em salvar
-        pyautogui.click(517,537)
-        sleep(0.5)
-        #clicar em sim (caso tenha algo para substituir)
-        pyautogui.click(745,378)     
+def salvar_como_pdf(CDA):
+    pyautogui.hotkey('ctrl', 'p')
+    sleep(2)
+    pyautogui.click(1519, 259)
+    sleep(1)
+    pyautogui.click(1477, 330)
+    sleep(1)
+    pyautogui.click(1493, 918)
+    sleep(1)
+    new_func()
+    pyautogui.write(f'relatorio_{CDA}.pdf')
+    pyautogui.click(716, 670)
+    sleep(1)
+    pyautogui.click(1033, 527)     
 
-# entrar no site da -https://www.dividaativa.pge.sp.gov.br/sc/pages/consultas/consultarDebito.jsf
-chrome_driver_path = r'C:\ProjetorPython\dev\chromedriver-win64\chromedriver.exe'
-driver = webdriver.Chrome(executable_path=chrome_driver_path)
-driver.get('https://www.dividaativa.pge.sp.gov.br/sc/pages/consultas/consultarDebito.jsf')
+# Inicializando o driver do Chrome
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+link = 'https://www.dividaativa.pge.sp.gov.br/sc/pages/consultas/consultarDebito.jsf'
+driver.get(link)
 
-pyautogui.click(982,25)
+primeiro_registro2 = True  # Variável para controlar o primeiro registro
+
+pyautogui.click(1480, 39)
+sleep(2)
+pyautogui.click(1868, 184)
+sleep(2)
 
 # Nome do arquivo Excel e nome da planilha
-nome_arquivo_excel = r'C:\ProjetorPython\files\Análise EFs - 1503986-79.2019.8.26.0014 - consulta.xlsx'
-nome_planilha_excel = 'Débitos IPVA SP - Pan Arre'
+nome_arquivo_excel = r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\Template_Ipva e Taxa_Judiciaria - VDG - 29.07.xlsx'
+nome_planilha_excel = 'Débitos Taxa Judiciaria'
 
 # Carregar a planilha Excel
 workbook = openpyxl.load_workbook(nome_arquivo_excel)
@@ -65,45 +71,35 @@ while row <= total_rows:
         print("Num_CDA está vazio. Saindo do loop.")
         break  # Sai do loop se Num_CDA estiver vazio
 
-    if primeiro_registro2:
-        pyautogui.click(985,24)
-        sleep(1)
-        pyautogui.keyDown('ctrl')
-        pyautogui.press('p')
-        pyautogui.keyUp('ctrl')
-        sleep(1)
-        #clicar em destino
-        pyautogui.click(1038,158)
-        sleep(0.5)
-        #clicar em guardar como PDF
-        pyautogui.click(1050,204)
-        sleep(0.5)
-        #clicar em guardar
-        pyautogui.click(1034,667)
-        sleep(0.5)
-        #apagar nome
-        new_func()
-        #Escreve a CDA
-        pyautogui.write('excluir')
-        #clicar em salvar
-        pyautogui.click(517,537)
-        sleep(0.5)
-        #clicar em sim (caso tenha algo para substituir)
-        pyautogui.click(745,378)
-        primeiro_registro2 = False  # Defina como False após o primeiro registro
-
    # Digitar o CDA
     Campo_CDA = driver.find_element(By.XPATH, "//input[@id='consultaDebitoForm:decTxtTipoConsulta:cdaEtiqueta']")
     Campo_CDA.clear()  # Limpar o campo antes de inserir um novo valor
     Campo_CDA.send_keys(Num_CDA)
    
-    # Se for o primeiro registro, espere 35 segundos
+   # Se for o primeiro registro, espere 35 segundos
     if primeiro_registro:
-        sleep(35)
+        chave_captcha = driver.find_element(By.CLASS_NAME, 'g-recaptcha').get_attribute('data-sitekey')
+
+        solver = recaptchaV2Proxyless()
+        solver.set_verbose(1)
+        solver.set_key(chave_api)
+        solver.set_website_url(link)
+        solver.set_website_key(chave_captcha)
+
+        resposta = solver.solve_and_return_solution()
+
+        if resposta != 0:
+            #print(resposta)
+            # preencher o campo do token do captcha
+            driver.execute_script(f"document.getElementById('g-recaptcha-response').innerHTML = '{resposta}'")
+            driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id78_body']/div[2]/input[2]").click()
+        else:
+            print(solver.err_string)
+
         primeiro_registro = False  # Defina como False após o primeiro registro
 
-    # Botão Consultar
-    btn_Consultar = driver.find_element(By.XPATH, "//input[@name='consultaDebitoForm:j_id114']")
+   # Botão Consultar
+    btn_Consultar = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id78_body']/div[2]/input[2]")
     btn_Consultar.click()
     sleep(1)
 
@@ -117,7 +113,7 @@ while row <= total_rows:
     if "Nenhum resultado com os critérios de consulta" in resultado_msg:
         CDA = str(Num_CDA)
         #Gerar PDF da Tela
-        GerarPDF(CDA)
+        salvar_como_pdf(CDA)
         row += 1  # Vá para a próxima linha e continue o loop
         continue
     # Consultar IPVA
@@ -253,7 +249,7 @@ while row <= total_rows:
     workbook.save(nome_arquivo_excel)
     CDA = str(Num_CDA)
    #Gerar PDF da Tela
-    GerarPDF(CDA)
+    salvar_como_pdf(CDA)
 
      # Botão Voltar
     btn_Voltar = driver.find_element(By.XPATH, "//input[@id='consultaDebitoForm:btnVoltarDetalheDebito']")
