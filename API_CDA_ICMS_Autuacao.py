@@ -46,7 +46,7 @@ pyautogui.click(1868, 184)
 sleep(2)
 
 # Nome do arquivo Excel e nome da planilha
-nome_arquivo_excel = r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\Template_Ipva e Taxa_Judiciaria - VDG - 31.07.xlsx'
+nome_arquivo_excel = r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\Template_Ipva e Taxa_Judiciaria - ICMS AUTUACAO.xlsx'
 nome_planilha_excel = 'Débitos IPVA'
 
 # Carregar a planilha Excel
@@ -54,7 +54,7 @@ workbook = openpyxl.load_workbook(nome_arquivo_excel)
 planilha = workbook[nome_planilha_excel]
 
 # Começando da linha 4, coluna 3 (C)
-start_row = 6
+start_row = 3
 column_index = 3
 
 # Descobrir o número total de linhas na planilha
