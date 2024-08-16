@@ -27,7 +27,7 @@ def salvar_como_pdf(CDA):
     pyautogui.click(1493, 918)
     sleep(1)
     new_func()
-    pyautogui.write(f'relatorio_{CDA}.pdf')
+    pyautogui.write(f'relatorio_BV_{CDA}.pdf')
     pyautogui.click(716, 670)
     sleep(1)
     pyautogui.click(1033, 527)
@@ -46,7 +46,7 @@ pyautogui.click(1868, 184)
 sleep(2)
 
 # Nome do arquivo Excel e nome da planilha
-nome_arquivo_excel = r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\Planilhamento - 1503983-27.2019.8.26.0014.xlsx'
+nome_arquivo_excel = r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\Template_Ipva e Taxa_Judiciaria - VDG - 08.08-1.xlsx'
 nome_planilha_excel = 'Débitos IPVA SP - Pan Arre'
 
 # Carregar a planilha Excel
@@ -54,7 +54,7 @@ workbook = openpyxl.load_workbook(nome_arquivo_excel)
 planilha = workbook[nome_planilha_excel]
 
 # Começando da linha 4, coluna 3 (C)
-start_row = 4
+start_row = 2610
 column_index = 3
 
 # Descobrir o número total de linhas na planilha
@@ -138,6 +138,12 @@ while row <= total_rows:
     except NoSuchElementException:
       valor_mora_multa = 0
 
+    try:
+      valor_juros_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:j_id1130:2:j_id1138']")
+      valor_juros = valor_juros_element.text
+    except NoSuchElementException:
+       valor_juros = 0
+
        # Extrair informações
     num_registro_element = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id1024']")
     num_registro = num_registro_element.find_element(By.TAG_NAME, "span").text
@@ -159,9 +165,6 @@ while row <= total_rows:
     
     valor_principal_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:j_id1130:0:j_id1138']")
     valor_principal = valor_principal_element.text
-
-    valor_juros_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:j_id1130:2:j_id1138']")
-    valor_juros = valor_juros_element.text
 
     valor_multa_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:j_id1130:3:j_id1138']")
     valor_multa = valor_multa_element.text
