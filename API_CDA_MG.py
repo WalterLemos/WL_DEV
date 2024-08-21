@@ -44,15 +44,15 @@ sleep(2)
 #printlongo()
 
 # Nome do arquivo Excel e nome da planilha
-nome_arquivo_excel = r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\Atualização CDAs - BV - 5316779-54.2023.8.13.0024 - ref. 08_2024.xlsx'
-nome_planilha_excel = '5316779-54.2023.8.13.0024'
+nome_arquivo_excel = r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\Minas Gerais 3(Planilha2).xlsx'
+nome_planilha_excel = 'Minas Gerais 3(Planilha2)'
 
 # Carregar a planilha Excel
 workbook = openpyxl.load_workbook(nome_arquivo_excel)
 planilha = workbook[nome_planilha_excel]
 
 # Começando da linha 4, coluna 3 (C)
-Linha = 143
+Linha = 2
 Coluna_2 = 2
 coluna_3 = 3
 
@@ -155,7 +155,7 @@ while linha <= total_rows:
         
         sleep(1.5)
         # Botão Voltar
-        pyautogui.click(1513,739)
+        pyautogui.click(1517,711)
         sleep(1)
 
 # Fechar o WebDriver

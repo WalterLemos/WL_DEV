@@ -27,7 +27,7 @@ def salvar_como_pdf(CDA):
     pyautogui.click(1493, 918)
     sleep(1)
     new_func()
-    pyautogui.write(f'relatorio_BV_{CDA}.pdf')
+    pyautogui.write(f'relatorio_{CDA}.pdf')
     pyautogui.click(716, 670)
     sleep(1)
     pyautogui.click(1033, 527)
@@ -54,7 +54,7 @@ workbook = openpyxl.load_workbook(nome_arquivo_excel)
 planilha = workbook[nome_planilha_excel]
 
 # Começando da linha 4, coluna 3 (C)
-start_row = 2610
+start_row = 3254
 column_index = 3
 
 # Descobrir o número total de linhas na planilha
