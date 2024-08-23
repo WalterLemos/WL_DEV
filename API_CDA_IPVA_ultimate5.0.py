@@ -47,6 +47,7 @@ def start_process(excel_path, sheet_name, start_row, output_dir):
     chrome_options = configurar_chrome_options()
     driver_service = Service(r'C:\chromedriver-win64\chromedriver.exe')
     driver = webdriver.Chrome(service=driver_service, options=chrome_options)
+    driver.maximize_window()
 
     link = 'https://www.dividaativa.pge.sp.gov.br/sc/pages/consultas/consultarDebito.jsf'
     driver.get(link)
