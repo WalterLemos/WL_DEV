@@ -58,6 +58,7 @@ def separar_dados():
     
     ws_destino = wb_origem.create_sheet(title="Dados Separados")
     
+    # Cabeçalho inicial
     cabecalho = [
         "CNPJ/CPF", "Nome Empresa", "Serviço", 
         "RequestId", "WorkflowStartedTimestamp", "WorkflowStartedTimestamp", "WorkflowStatus", 
@@ -69,6 +70,7 @@ def separar_dados():
     max_areas = 0
     max_contatos = 0
     
+    # Determine o número máximo de colunas para contatos e áreas de interesse
     for i in range(2, ws_origem.max_row + 1):
         texto_areas = ws_origem.cell(row=i, column=42).value
         texto_ao = ws_origem.cell(row=i, column=41).value
@@ -81,16 +83,20 @@ def separar_dados():
             contatos = separar_dados_relacionamento(texto_ao)
             max_contatos = max(max_contatos, len(contatos))
     
+    # Adicionando colunas de contato no cabeçalho
     for j in range(1, max_contatos + 1):
         cabecalho.extend([
             f"Contato_{j}", f"E-mail_{j}", f"Cargo_{j}", f"Tel_{j}"
         ])
 
+    # Adicionando colunas de áreas de interesse no cabeçalho após contatos
     for j in range(1, max_areas + 1):
         cabecalho.append(f"Áreas de interesse_{j}")
     
+    # Adiciona o cabeçalho à planilha de destino
     ws_destino.append(cabecalho)
     
+    # Processa cada linha da planilha de origem
     for i in range(2, ws_origem.max_row + 1):
         texto = ws_origem.cell(row=i, column=17).value
         texto2 = ws_origem.cell(row=i, column=18).value
@@ -111,10 +117,11 @@ def separar_dados():
         col_x = ws_origem.cell(row=i, column=24).value
         col_y = ws_origem.cell(row=i, column=25).value
         
+        # Processa contatos e áreas de interesse separadamente
         contatos_relacionamento = separar_dados_relacionamento(texto_ao) if texto_ao else [["", "", "", ""]]
-        
         areas_interesse = separar_areas_interesse(texto_areas) if texto_areas else []
         
+        # Define a linha base dependendo do tipo de pessoa
         if tipo_pessoa == "Pessoa Física" and texto2:
             dados_pessoa_fisica = separar_dados_pessoa_fisica(texto2)
             linha_destino = [
@@ -143,10 +150,17 @@ def separar_dados():
                     "", ""
                 ]
         
+        # Adiciona os contatos primeiro
         for contato in contatos_relacionamento:
             linha_destino.extend(contato)
+        
+        # Preenche os contatos restantes com campos vazios para garantir que as áreas de interesse comecem na posição correta
+        linha_destino.extend([""] * (max_contatos * 4 - len(contatos_relacionamento) * 4))
+        
+        # Adiciona as áreas de interesse após os contatos
         linha_destino.extend(areas_interesse + [""] * (max_areas - len(areas_interesse)))
         
+        # Adiciona a linha à planilha de destino
         ws_destino.append(linha_destino)
     
     wb_origem.save(caminho_arquivo)
