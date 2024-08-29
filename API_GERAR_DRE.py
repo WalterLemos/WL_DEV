@@ -56,35 +56,35 @@ def renomear_arquivo_downloads(cda, num_processo):
 def extrair_informacoes(CDA, num_processo):
      
     # Extrair informações
-    parte_reu_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id385']")
+    parte_reu_element = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id389']")
     parte_reu = parte_reu_element.find_element(By.TAG_NAME, "span").text
 
-    parte_autor_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id377']")
+    parte_autor_element = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id381']")
     parte_antor = parte_autor_element.find_element(By.TAG_NAME, "span").text
 
-    vara_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id393']")
+    vara_element = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id397']")
     vara = vara_element.find_element(By.TAG_NAME, "span").text
 
-    comarca_foro_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id401']")
+    comarca_foro_element = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id405']")
     comarca_foro = comarca_foro_element.find_element(By.TAG_NAME, "span").text
 
-    data_inscricao_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id328']")
+    data_inscricao_element = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id332']")
     data_inscricao = data_inscricao_element.find_element(By.TAG_NAME, "span").text
 
-    situacao_element = driver.find_element(By.XPATH, "//div[@id='consultaDebitoForm:j_id352']")
+    situacao_element = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id356']")
     situacao = situacao_element.find_element(By.TAG_NAME, "span").text
     
     saldo_element = driver.find_element(By.XPATH, "//span[@id='consultaDebitoForm:gerarGare']")
     saldo = saldo_element.find_element(By.TAG_NAME, "div").text
     saldo_devedor = saldo.strip('Saldo Devedor (R$):')  # Remove Saldo Devedor (R$) do início 
  
-    valor_principal_element = driver.find_element(By.XPATH,"//td[@id='consultaDebitoForm:j_id416:0:j_id426']  ")
+    valor_principal_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:j_id420:0:j_id430'] ")
     valor_principal = valor_principal_element.text
 
-    valor_juros_element = driver.find_element(By.XPATH,"//td[@id='consultaDebitoForm:j_id416:2:j_id426']")
+    valor_juros_element = driver.find_element(By.XPATH,"//*[@id='consultaDebitoForm:j_id420:2:j_id430']")
     valor_juros = valor_juros_element.text
 
-    valor_honorarios_element = driver.find_element(By.XPATH, "//td[@id='consultaDebitoForm:j_id416:3:j_id426']")
+    valor_honorarios_element = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id420:3:j_id430']")
     valor_honorarios = valor_honorarios_element.text
 
      # Encontre a próxima coluna disponível (vamos começar da coluna D)
@@ -138,7 +138,7 @@ pyautogui.click(1870,180)
 sleep(3)
 
 # Nome do arquivo Excel e nome da planilha
-nome_arquivo_excel = r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\Templete_Taxa_Judiciaria.xlsx'
+nome_arquivo_excel = r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\Template_Ipva e Taxa_Judiciaria - VDG - 29.08.xlsx'
 nome_planilha_excel = 'Débitos Taxa Judiciaria'
 
 # Carregar a planilha Excel
@@ -220,17 +220,17 @@ while row <= total_rows:
     btn_liquidar.click()
     sleep(2)
 
-    numero_processo_element = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id369']")
+    numero_processo_element = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id373']")
     numero_processo = numero_processo_element.find_element(By.TAG_NAME, "span").text
 
     extrair_informacoes(Num_CDA, numero_processo)
     sleep(2)
 
     # Verificar se o elemento está visível e clicável
-    btn_Gerar_Gare = WebDriverWait(driver, 10).until(
+    btn_Gerar_Gare = WebDriverWait(driver, 15).until(
         EC.visibility_of_element_located((By.XPATH, "//*[@id='consultaDebitoForm:btnDownload']"))
     )
-    btn_Gerar_Gare = WebDriverWait(driver, 10).until(
+    btn_Gerar_Gare = WebDriverWait(driver, 15).until(
         EC.element_to_be_clickable((By.XPATH, "//*[@id='consultaDebitoForm:btnDownload']"))
     )
     btn_Gerar_Gare.click()
@@ -239,11 +239,11 @@ while row <= total_rows:
     pyautogui.click(1348,450)
     sleep(2)
     # Esperar até que o painel modal desapareça
-    WebDriverWait(driver, 10).until(
+    WebDriverWait(driver, 15).until(
         EC.invisibility_of_element((By.ID, "modalPanelMsgGerarGareDiv"))
     )
 
-    btn_download = WebDriverWait(driver, 10).until(
+    btn_download = WebDriverWait(driver, 15).until(
         EC.element_to_be_clickable((By.XPATH, "//*[@id='consultaDebitoForm:btnDownloadGare']"))
     )
     btn_download.click()
@@ -253,7 +253,7 @@ while row <= total_rows:
     sleep(3)
 
     # Botão Voltar
-    btn_Voltar = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id854_body']/div[1]/input[1]")
+    btn_Voltar = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id858_body']/div[1]/input[1]")
     btn_Voltar.click()
     sleep(3)
     
@@ -263,7 +263,7 @@ while row <= total_rows:
     sleep(3)
 
     # Botão Voltar
-    btn_Voltar2 = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:consultaDebito']/div[2]/input")
+    btn_Voltar2 = driver.find_element(By.XPATH, "//input[@name='consultaDebitoForm:j_id284']")
     btn_Voltar2.click()
     sleep(3)
     row += 1
