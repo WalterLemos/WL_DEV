@@ -15,24 +15,6 @@ import openpyxl
 from Chave import *
 from bs4 import BeautifulSoup
 
-def new_func():
-    pyautogui.press('backspace', presses=20)
-
-def salvar_como_pdf(CDA, num_processo):
-    pyautogui.hotkey('ctrl', 'p')
-    sleep(2)
-    pyautogui.click(1519, 259)
-    sleep(1)
-    pyautogui.click(1477, 330)
-    sleep(1)
-    pyautogui.click(1493, 918)
-    sleep(1)
-    new_func()
-    pyautogui.write(f'CDA_{CDA}_{num_processo}.pdf')
-    pyautogui.click(716, 670)
-    sleep(1)
-    pyautogui.click(1033, 527)
-
 def renomear_arquivo_downloads(cda, num_processo):
     # Diretório de downloads
     pasta_downloads = os.path.expanduser('~/Downloads')

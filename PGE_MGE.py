@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -52,7 +53,7 @@ def start_process(excel_file, sheet_name, start_row, caminho_diretorio):
 
     # Inicializando o driver do Chrome
     chrome_options = configurar_chrome_options()
-    driver_service = Service(driver_path)
+    driver_service = Service((ChromeDriverManager().install()))
     driver = webdriver.Chrome(service=driver_service, options=chrome_options)
     link = 'http://receitaonline.fazenda.mg.gov.br/rol/dae/'
     driver.get(link)
