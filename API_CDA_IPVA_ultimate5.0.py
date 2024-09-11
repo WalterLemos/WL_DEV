@@ -62,10 +62,39 @@ def start_process(excel_path, sheet_name, start_row, output_dir):
 
     column_index = 3
     total_rows = planilha.max_row
-    row = 4
+    row = 3
     primeiro_registro = True
 
     while row <= total_rows:
+
+        resultado_msg_element = driver.find_elements(By.XPATH, " //*[@id='messages']/tbody/tr/td/span[2]")
+        resultado_msg = resultado_msg_element[0].text if resultado_msg_element else ""
+
+        if "Recaptcha não validado." in resultado_msg:
+            if primeiro_registro:
+                chave_captcha = driver.find_element(By.CLASS_NAME, 'g-recaptcha').get_attribute('data-sitekey')
+
+                solver = recaptchaV2Proxyless()
+                solver.set_verbose(1)
+                solver.set_key(chave_api)
+                solver.set_website_url(link)
+                solver.set_website_key(chave_captcha)
+
+                resposta = solver.solve_and_return_solution()
+
+                if resposta != 0:
+                    #print(resposta)
+                    # preencher o campo do token do captcha
+                    driver.execute_script(f"document.getElementById('g-recaptcha-response').innerHTML = '{resposta}'")
+                    driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id78_body']/div[2]/input[2]").click()
+                    primeiro_registro = False  # Defina como False após o primeiro registro
+                else:
+                    print(solver.err_string)
+
+            btn_Consultar = driver.find_element(By.XPATH, "//*[@id='consultaDebitoForm:j_id78_body']/div[2]/input[2]")
+            btn_Consultar.click()
+            sleep(1)
+       
         
         # Verificação se existe um OK na linha atual coluna 21 (coluna de Verificação)
         while row <= total_rows:
