@@ -13,7 +13,6 @@ from selenium.webdriver.support.select import Select
 from webdriver_manager.chrome import ChromeDriverManager
 import openpyxl
 from time import sleep
-from time import sleep
 import re
 from selenium.common.exceptions import NoSuchElementException
 from twocaptcha import TwoCaptcha

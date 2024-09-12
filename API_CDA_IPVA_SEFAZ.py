@@ -6,6 +6,13 @@ import pyautogui
 from time import sleep
 import openpyxl
 from tqdm import tqdm  # Importar a biblioteca tqdm
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.select import Select
+from webdriver_manager.chrome import ChromeDriverManager
+import re
 
 def new_func():
     pyautogui.press('backspace', presses=20)
@@ -35,18 +42,23 @@ def Imprimir(Renavam):
     #clicar em sim (caso tenha algo para substituir)
     pyautogui.click(1020,537)
 
+def configurar_chrome_options():
+    chrome_options = Options()
+    chrome_options.add_argument('--kiosk-printing')  # Ativa a impressão automática sem diálogo
+    return chrome_options
 
 def consulta_ipva():
-    # Configurando o caminho do executável como variável de ambiente
-    chrome_driver_path = r'C:\ProjetorPython\dev\chromedriver-win64\chromedriver.exe'
-    os.environ["webdriver.chrome.driver"] = chrome_driver_path
-
-    # Inicializando o driver do Chrome
-    driver = webdriver.Chrome()
-    driver.get('https://www.ipva.fazenda.sp.gov.br/IPVANET_Consulta/Consulta.aspx')
-
-    pyautogui.click(1483,48)
    
+    # Configurando o Chrome com as opções de impressão
+    chrome_options = configurar_chrome_options()
+    driver_service = Service((ChromeDriverManager().install()))
+    driver = webdriver.Chrome(service=driver_service, options=chrome_options)
+    driver.maximize_window()
+
+    link = 'https://www.ipva.fazenda.sp.gov.br/IPVANET_Consulta/Consulta.aspx'
+    driver.get(link)
+    sleep(2) 
+
     # Nome do arquivo Excel e nome da planilha
     nome_arquivo_excel = r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\Templete_Renavam.xlsx'
     nome_planilha_excel = 'Débitos Renavam'
