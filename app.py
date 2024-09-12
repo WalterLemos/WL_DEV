@@ -43,12 +43,12 @@ for processo in processos:
     data_distribuicao = data_distribuicao[1]
     data_distribuicao = data_distribuicao.text
     # extrair e guardar todas as últimas movimentações
-    movimentacoes = driver.find_elements(By.XPATH,"//*[@id='j_id134:processoEvento']/colgroup")
+    movimentacoes = driver.find_elements(By.XPATH,"//*[@id='j_id134:processoEventoPanel_body']")
     lista_movimentacoes = []
     for movimentacao in movimentacoes:
         lista_movimentacoes.append(movimentacao.text)
     # guardar tudo no excel, separados por processo
-    workbook = openpyxl.load_workbook(r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\dados.xlsx')
+    workbook = openpyxl.load_workbook('dados.xlsx')
     try:
         # código para inserir dados em página existente e inserir as informações
         # acessar página do processo
