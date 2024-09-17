@@ -22,28 +22,31 @@ def contar_frequencia_numeros(arquivo_excel):
 
     return numeros_ordenados, contador_filtrado
 
-# Função para gerar 3 combinações aleatórias de 15 números baseadas nos mais frequentes
+# Função para gerar combinações aleatórias de 15 números baseadas nos mais frequentes
 def gerar_combinacoes_aleatorias(numeros_ordenados, n_combinacoes=3, tamanho_combinacao=15):
     combinacoes = set()
-    base_numeros = numeros_ordenados[:25]  # Usar os números mais frequentes
+    
+    # Usar os números mais frequentes
+    base_numeros = numeros_ordenados[:25]  # Usar os 25 números mais frequentes
 
     while len(combinacoes) < n_combinacoes:
         # Gera uma combinação aleatória de 15 números da base de números mais frequentes
-        combinacao = tuple(sorted(random.sample(base_numeros, tamanho_combinacao)))
+        combinacao = tuple(random.sample(base_numeros, tamanho_combinacao))
         combinacoes.add(combinacao)  # Adiciona ao conjunto para garantir unicidade
 
     return list(combinacoes)
 
-# Função para mostrar as combinações geradas e a frequência dos números
+# Função para formatar e mostrar as combinações geradas
 def mostrar_frequencia(combinacoes, contador):
     for i, combinacao in enumerate(combinacoes, 1):
-        print(f'Combinação {i}: {combinacao}')
-        for numero in combinacao:
-            print(f'Número {numero} aparece {contador.get(numero, 0)} vezes')
-        print()  # Linha em branco para separar combinações
-
+        combinacao_formatada = ','.join(f'{num:02d}' for num in sorted(combinacao))  # Ordena os números antes de formatar
+        print(f'Combinação {i}: {combinacao_formatada}')
+       # for numero in sorted(combinacao):
+           #print(f'Número {numero} aparece {contador.get(numero, 0)} vezes')
+        #print()  # Linha em branco para separar combinações
+        
 # Caminho para o arquivo Excel
-arquivo_excel = r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\Lotofácil.xlsx'
+arquivo_excel = r'C:\Users\walter.oliveira\Documents\ProjetosPython\dev\Bichara_Dev\repository\Lotofácil_Atualizada.xlsx'
 
 # Executa a contagem de frequência e gera as combinações aleatórias
 numeros_ordenados, contador = contar_frequencia_numeros(arquivo_excel)

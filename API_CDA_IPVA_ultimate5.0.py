@@ -61,7 +61,7 @@ def start_process(excel_path, sheet_name, start_row, output_dir):
 
     column_index = 3
     total_rows = planilha.max_row
-    row = 3
+    row = 4
     primeiro_registro = True
 
     while row <= total_rows:
